@@ -1,0 +1,1884 @@
+{
+    "format_version": "1.2",
+    "terraform_version": "1.11.1",
+    "variables": {
+        "app_name": {
+            "value": "eth-client"
+        },
+        "environment": {
+            "value": "production"
+        }
+    },
+    "planned_values": {
+        "outputs": {
+            "ecr_repository_url": {
+                "sensitive": false
+            },
+            "ecs_cluster_name": {
+                "sensitive": false,
+                "type": "string",
+                "value": "eth-client-cluster"
+            },
+            "ecs_service_name": {
+                "sensitive": false,
+                "type": "string",
+                "value": "eth-client-service"
+            }
+        },
+        "root_module": {
+            "resources": [
+                {
+                    "address": "aws_ecr_repository.app_repo",
+                    "mode": "managed",
+                    "type": "aws_ecr_repository",
+                    "name": "app_repo",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "encryption_configuration": [],
+                        "force_delete": null,
+                        "image_scanning_configuration": [
+                            {
+                                "scan_on_push": true
+                            }
+                        ],
+                        "image_tag_mutability": "MUTABLE",
+                        "name": "eth-client",
+                        "tags": null,
+                        "timeouts": null
+                    },
+                    "sensitive_values": {
+                        "encryption_configuration": [],
+                        "image_scanning_configuration": [
+                            {}
+                        ],
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_ecr_repository_policy.app_repo_policy",
+                    "mode": "managed",
+                    "type": "aws_ecr_repository_policy",
+                    "name": "app_repo_policy",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "policy": "{\"Statement\":[{\"Action\":[\"ecr:GetDownloadUrlForLayer\",\"ecr:BatchGetImage\",\"ecr:BatchCheckLayerAvailability\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs.amazonaws.com\"},\"Sid\":\"ECSAccess\"}],\"Version\":\"2012-10-17\"}",
+                        "repository": "eth-client"
+                    },
+                    "sensitive_values": {}
+                },
+                {
+                    "address": "aws_ecs_cluster.app_cluster",
+                    "mode": "managed",
+                    "type": "aws_ecs_cluster",
+                    "name": "app_cluster",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "configuration": [],
+                        "name": "eth-client-cluster",
+                        "service_connect_defaults": [],
+                        "setting": [
+                            {
+                                "name": "containerInsights",
+                                "value": "enabled"
+                            }
+                        ],
+                        "tags": null
+                    },
+                    "sensitive_values": {
+                        "configuration": [],
+                        "service_connect_defaults": [],
+                        "setting": [
+                            {}
+                        ],
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_ecs_service.app_service",
+                    "mode": "managed",
+                    "type": "aws_ecs_service",
+                    "name": "app_service",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 1,
+                    "values": {
+                        "alarms": [],
+                        "availability_zone_rebalancing": "DISABLED",
+                        "capacity_provider_strategy": [],
+                        "deployment_circuit_breaker": [],
+                        "deployment_controller": [],
+                        "deployment_maximum_percent": 200,
+                        "deployment_minimum_healthy_percent": 100,
+                        "desired_count": 1,
+                        "enable_ecs_managed_tags": false,
+                        "enable_execute_command": false,
+                        "force_delete": null,
+                        "force_new_deployment": null,
+                        "health_check_grace_period_seconds": null,
+                        "launch_type": "FARGATE",
+                        "load_balancer": [],
+                        "name": "eth-client-service",
+                        "network_configuration": [
+                            {
+                                "assign_public_ip": true
+                            }
+                        ],
+                        "ordered_placement_strategy": [],
+                        "placement_constraints": [],
+                        "propagate_tags": null,
+                        "scheduling_strategy": "REPLICA",
+                        "service_connect_configuration": [],
+                        "service_registries": [],
+                        "tags": null,
+                        "timeouts": null,
+                        "volume_configuration": [],
+                        "vpc_lattice_configurations": [],
+                        "wait_for_steady_state": false
+                    },
+                    "sensitive_values": {
+                        "alarms": [],
+                        "capacity_provider_strategy": [],
+                        "deployment_circuit_breaker": [],
+                        "deployment_controller": [],
+                        "load_balancer": [],
+                        "network_configuration": [
+                            {
+                                "security_groups": [],
+                                "subnets": []
+                            }
+                        ],
+                        "ordered_placement_strategy": [],
+                        "placement_constraints": [],
+                        "service_connect_configuration": [],
+                        "service_registries": [],
+                        "tags_all": {},
+                        "triggers": {},
+                        "volume_configuration": [],
+                        "vpc_lattice_configurations": []
+                    }
+                },
+                {
+                    "address": "aws_ecs_task_definition.app_task",
+                    "mode": "managed",
+                    "type": "aws_ecs_task_definition",
+                    "name": "app_task",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 1,
+                    "values": {
+                        "cpu": "256",
+                        "ephemeral_storage": [],
+                        "family": "eth-client",
+                        "inference_accelerator": [],
+                        "ipc_mode": null,
+                        "memory": "512",
+                        "network_mode": "awsvpc",
+                        "pid_mode": null,
+                        "placement_constraints": [],
+                        "proxy_configuration": [],
+                        "requires_compatibilities": [
+                            "FARGATE"
+                        ],
+                        "runtime_platform": [],
+                        "skip_destroy": false,
+                        "tags": null,
+                        "track_latest": false,
+                        "volume": []
+                    },
+                    "sensitive_values": {
+                        "ephemeral_storage": [],
+                        "inference_accelerator": [],
+                        "placement_constraints": [],
+                        "proxy_configuration": [],
+                        "requires_compatibilities": [
+                            false
+                        ],
+                        "runtime_platform": [],
+                        "tags_all": {},
+                        "volume": []
+                    }
+                },
+                {
+                    "address": "aws_iam_role.ecs_task_execution_role",
+                    "mode": "managed",
+                    "type": "aws_iam_role",
+                    "name": "ecs_task_execution_role",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+                        "description": null,
+                        "force_detach_policies": false,
+                        "max_session_duration": 3600,
+                        "name": "eth-client-task-execution-role",
+                        "path": "/",
+                        "permissions_boundary": null,
+                        "tags": null
+                    },
+                    "sensitive_values": {
+                        "inline_policy": [],
+                        "managed_policy_arns": [],
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_iam_role.ecs_task_role",
+                    "mode": "managed",
+                    "type": "aws_iam_role",
+                    "name": "ecs_task_role",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+                        "description": null,
+                        "force_detach_policies": false,
+                        "max_session_duration": 3600,
+                        "name": "eth-client-task-role",
+                        "path": "/",
+                        "permissions_boundary": null,
+                        "tags": null
+                    },
+                    "sensitive_values": {
+                        "inline_policy": [],
+                        "managed_policy_arns": [],
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_iam_role_policy_attachment.ecs_task_execution_role_policy",
+                    "mode": "managed",
+                    "type": "aws_iam_role_policy_attachment",
+                    "name": "ecs_task_execution_role_policy",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "policy_arn": "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
+                        "role": "eth-client-task-execution-role"
+                    },
+                    "sensitive_values": {}
+                },
+                {
+                    "address": "aws_internet_gateway.app_igw",
+                    "mode": "managed",
+                    "type": "aws_internet_gateway",
+                    "name": "app_igw",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "tags": {
+                            "Name": "eth-client-igw"
+                        },
+                        "tags_all": {
+                            "Name": "eth-client-igw"
+                        },
+                        "timeouts": null
+                    },
+                    "sensitive_values": {
+                        "tags": {},
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_route_table.app_route_table",
+                    "mode": "managed",
+                    "type": "aws_route_table",
+                    "name": "app_route_table",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "route": [
+                            {
+                                "carrier_gateway_id": "",
+                                "cidr_block": "0.0.0.0/0",
+                                "core_network_arn": "",
+                                "destination_prefix_list_id": "",
+                                "egress_only_gateway_id": "",
+                                "ipv6_cidr_block": "",
+                                "local_gateway_id": "",
+                                "nat_gateway_id": "",
+                                "network_interface_id": "",
+                                "transit_gateway_id": "",
+                                "vpc_endpoint_id": "",
+                                "vpc_peering_connection_id": ""
+                            }
+                        ],
+                        "tags": {
+                            "Name": "eth-client-rt"
+                        },
+                        "tags_all": {
+                            "Name": "eth-client-rt"
+                        },
+                        "timeouts": null
+                    },
+                    "sensitive_values": {
+                        "propagating_vgws": [],
+                        "route": [
+                            {}
+                        ],
+                        "tags": {},
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_route_table_association.app_rta_a",
+                    "mode": "managed",
+                    "type": "aws_route_table_association",
+                    "name": "app_rta_a",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "gateway_id": null,
+                        "timeouts": null
+                    },
+                    "sensitive_values": {}
+                },
+                {
+                    "address": "aws_route_table_association.app_rta_b",
+                    "mode": "managed",
+                    "type": "aws_route_table_association",
+                    "name": "app_rta_b",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 0,
+                    "values": {
+                        "gateway_id": null,
+                        "timeouts": null
+                    },
+                    "sensitive_values": {}
+                },
+                {
+                    "address": "aws_security_group.app_sg",
+                    "mode": "managed",
+                    "type": "aws_security_group",
+                    "name": "app_sg",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 1,
+                    "values": {
+                        "description": "Security group for eth-client task",
+                        "egress": [
+                            {
+                                "cidr_blocks": [
+                                    "0.0.0.0/0"
+                                ],
+                                "description": "",
+                                "from_port": 0,
+                                "ipv6_cidr_blocks": [],
+                                "prefix_list_ids": [],
+                                "protocol": "-1",
+                                "security_groups": [],
+                                "self": false,
+                                "to_port": 0
+                            }
+                        ],
+                        "name": "eth-client-sg",
+                        "revoke_rules_on_delete": false,
+                        "tags": {
+                            "Name": "eth-client-sg"
+                        },
+                        "tags_all": {
+                            "Name": "eth-client-sg"
+                        },
+                        "timeouts": null
+                    },
+                    "sensitive_values": {
+                        "egress": [
+                            {
+                                "cidr_blocks": [
+                                    false
+                                ],
+                                "ipv6_cidr_blocks": [],
+                                "prefix_list_ids": [],
+                                "security_groups": []
+                            }
+                        ],
+                        "ingress": [],
+                        "tags": {},
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_subnet.app_subnet_a",
+                    "mode": "managed",
+                    "type": "aws_subnet",
+                    "name": "app_subnet_a",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 1,
+                    "values": {
+                        "assign_ipv6_address_on_creation": false,
+                        "availability_zone": "us-east-1a",
+                        "cidr_block": "10.0.1.0/24",
+                        "customer_owned_ipv4_pool": null,
+                        "enable_dns64": false,
+                        "enable_lni_at_device_index": null,
+                        "enable_resource_name_dns_a_record_on_launch": false,
+                        "enable_resource_name_dns_aaaa_record_on_launch": false,
+                        "ipv6_cidr_block": null,
+                        "ipv6_native": false,
+                        "map_customer_owned_ip_on_launch": null,
+                        "map_public_ip_on_launch": false,
+                        "outpost_arn": null,
+                        "tags": {
+                            "Name": "eth-client-subnet-a"
+                        },
+                        "tags_all": {
+                            "Name": "eth-client-subnet-a"
+                        },
+                        "timeouts": null
+                    },
+                    "sensitive_values": {
+                        "tags": {},
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_subnet.app_subnet_b",
+                    "mode": "managed",
+                    "type": "aws_subnet",
+                    "name": "app_subnet_b",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 1,
+                    "values": {
+                        "assign_ipv6_address_on_creation": false,
+                        "availability_zone": "us-east-1b",
+                        "cidr_block": "10.0.2.0/24",
+                        "customer_owned_ipv4_pool": null,
+                        "enable_dns64": false,
+                        "enable_lni_at_device_index": null,
+                        "enable_resource_name_dns_a_record_on_launch": false,
+                        "enable_resource_name_dns_aaaa_record_on_launch": false,
+                        "ipv6_cidr_block": null,
+                        "ipv6_native": false,
+                        "map_customer_owned_ip_on_launch": null,
+                        "map_public_ip_on_launch": false,
+                        "outpost_arn": null,
+                        "tags": {
+                            "Name": "eth-client-subnet-b"
+                        },
+                        "tags_all": {
+                            "Name": "eth-client-subnet-b"
+                        },
+                        "timeouts": null
+                    },
+                    "sensitive_values": {
+                        "tags": {},
+                        "tags_all": {}
+                    }
+                },
+                {
+                    "address": "aws_vpc.app_vpc",
+                    "mode": "managed",
+                    "type": "aws_vpc",
+                    "name": "app_vpc",
+                    "provider_name": "registry.terraform.io/hashicorp/aws",
+                    "schema_version": 1,
+                    "values": {
+                        "assign_generated_ipv6_cidr_block": null,
+                        "cidr_block": "10.0.0.0/16",
+                        "enable_dns_hostnames": true,
+                        "enable_dns_support": true,
+                        "instance_tenancy": "default",
+                        "ipv4_ipam_pool_id": null,
+                        "ipv4_netmask_length": null,
+                        "ipv6_ipam_pool_id": null,
+                        "ipv6_netmask_length": null,
+                        "tags": {
+                            "Name": "eth-client-vpc"
+                        },
+                        "tags_all": {
+                            "Name": "eth-client-vpc"
+                        }
+                    },
+                    "sensitive_values": {
+                        "tags": {},
+                        "tags_all": {}
+                    }
+                }
+            ]
+        }
+    },
+    "resource_changes": [
+        {
+            "address": "aws_ecr_repository.app_repo",
+            "mode": "managed",
+            "type": "aws_ecr_repository",
+            "name": "app_repo",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "encryption_configuration": [],
+                    "force_delete": null,
+                    "image_scanning_configuration": [
+                        {
+                            "scan_on_push": true
+                        }
+                    ],
+                    "image_tag_mutability": "MUTABLE",
+                    "name": "eth-client",
+                    "tags": null,
+                    "timeouts": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "encryption_configuration": [],
+                    "id": true,
+                    "image_scanning_configuration": [
+                        {}
+                    ],
+                    "registry_id": true,
+                    "repository_url": true,
+                    "tags_all": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "encryption_configuration": [],
+                    "image_scanning_configuration": [
+                        {}
+                    ],
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_ecr_repository_policy.app_repo_policy",
+            "mode": "managed",
+            "type": "aws_ecr_repository_policy",
+            "name": "app_repo_policy",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "policy": "{\"Statement\":[{\"Action\":[\"ecr:GetDownloadUrlForLayer\",\"ecr:BatchGetImage\",\"ecr:BatchCheckLayerAvailability\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs.amazonaws.com\"},\"Sid\":\"ECSAccess\"}],\"Version\":\"2012-10-17\"}",
+                    "repository": "eth-client"
+                },
+                "after_unknown": {
+                    "id": true,
+                    "registry_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {}
+            }
+        },
+        {
+            "address": "aws_ecs_cluster.app_cluster",
+            "mode": "managed",
+            "type": "aws_ecs_cluster",
+            "name": "app_cluster",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "configuration": [],
+                    "name": "eth-client-cluster",
+                    "service_connect_defaults": [],
+                    "setting": [
+                        {
+                            "name": "containerInsights",
+                            "value": "enabled"
+                        }
+                    ],
+                    "tags": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "configuration": [],
+                    "id": true,
+                    "service_connect_defaults": [],
+                    "setting": [
+                        {}
+                    ],
+                    "tags_all": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "configuration": [],
+                    "service_connect_defaults": [],
+                    "setting": [
+                        {}
+                    ],
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_ecs_service.app_service",
+            "mode": "managed",
+            "type": "aws_ecs_service",
+            "name": "app_service",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "alarms": [],
+                    "availability_zone_rebalancing": "DISABLED",
+                    "capacity_provider_strategy": [],
+                    "deployment_circuit_breaker": [],
+                    "deployment_controller": [],
+                    "deployment_maximum_percent": 200,
+                    "deployment_minimum_healthy_percent": 100,
+                    "desired_count": 1,
+                    "enable_ecs_managed_tags": false,
+                    "enable_execute_command": false,
+                    "force_delete": null,
+                    "force_new_deployment": null,
+                    "health_check_grace_period_seconds": null,
+                    "launch_type": "FARGATE",
+                    "load_balancer": [],
+                    "name": "eth-client-service",
+                    "network_configuration": [
+                        {
+                            "assign_public_ip": true
+                        }
+                    ],
+                    "ordered_placement_strategy": [],
+                    "placement_constraints": [],
+                    "propagate_tags": null,
+                    "scheduling_strategy": "REPLICA",
+                    "service_connect_configuration": [],
+                    "service_registries": [],
+                    "tags": null,
+                    "timeouts": null,
+                    "volume_configuration": [],
+                    "vpc_lattice_configurations": [],
+                    "wait_for_steady_state": false
+                },
+                "after_unknown": {
+                    "alarms": [],
+                    "capacity_provider_strategy": [],
+                    "cluster": true,
+                    "deployment_circuit_breaker": [],
+                    "deployment_controller": [],
+                    "iam_role": true,
+                    "id": true,
+                    "load_balancer": [],
+                    "network_configuration": [
+                        {
+                            "security_groups": true,
+                            "subnets": true
+                        }
+                    ],
+                    "ordered_placement_strategy": [],
+                    "placement_constraints": [],
+                    "platform_version": true,
+                    "service_connect_configuration": [],
+                    "service_registries": [],
+                    "tags_all": true,
+                    "task_definition": true,
+                    "triggers": true,
+                    "volume_configuration": [],
+                    "vpc_lattice_configurations": []
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "alarms": [],
+                    "capacity_provider_strategy": [],
+                    "deployment_circuit_breaker": [],
+                    "deployment_controller": [],
+                    "load_balancer": [],
+                    "network_configuration": [
+                        {
+                            "security_groups": [],
+                            "subnets": []
+                        }
+                    ],
+                    "ordered_placement_strategy": [],
+                    "placement_constraints": [],
+                    "service_connect_configuration": [],
+                    "service_registries": [],
+                    "tags_all": {},
+                    "triggers": {},
+                    "volume_configuration": [],
+                    "vpc_lattice_configurations": []
+                }
+            }
+        },
+        {
+            "address": "aws_ecs_task_definition.app_task",
+            "mode": "managed",
+            "type": "aws_ecs_task_definition",
+            "name": "app_task",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "cpu": "256",
+                    "ephemeral_storage": [],
+                    "family": "eth-client",
+                    "inference_accelerator": [],
+                    "ipc_mode": null,
+                    "memory": "512",
+                    "network_mode": "awsvpc",
+                    "pid_mode": null,
+                    "placement_constraints": [],
+                    "proxy_configuration": [],
+                    "requires_compatibilities": [
+                        "FARGATE"
+                    ],
+                    "runtime_platform": [],
+                    "skip_destroy": false,
+                    "tags": null,
+                    "track_latest": false,
+                    "volume": []
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "arn_without_revision": true,
+                    "container_definitions": true,
+                    "enable_fault_injection": true,
+                    "ephemeral_storage": [],
+                    "execution_role_arn": true,
+                    "id": true,
+                    "inference_accelerator": [],
+                    "placement_constraints": [],
+                    "proxy_configuration": [],
+                    "requires_compatibilities": [
+                        false
+                    ],
+                    "revision": true,
+                    "runtime_platform": [],
+                    "tags_all": true,
+                    "task_role_arn": true,
+                    "volume": []
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "ephemeral_storage": [],
+                    "inference_accelerator": [],
+                    "placement_constraints": [],
+                    "proxy_configuration": [],
+                    "requires_compatibilities": [
+                        false
+                    ],
+                    "runtime_platform": [],
+                    "tags_all": {},
+                    "volume": []
+                }
+            }
+        },
+        {
+            "address": "aws_iam_role.ecs_task_execution_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "ecs_task_execution_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+                    "description": null,
+                    "force_detach_policies": false,
+                    "max_session_duration": 3600,
+                    "name": "eth-client-task-execution-role",
+                    "path": "/",
+                    "permissions_boundary": null,
+                    "tags": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "create_date": true,
+                    "id": true,
+                    "inline_policy": true,
+                    "managed_policy_arns": true,
+                    "name_prefix": true,
+                    "tags_all": true,
+                    "unique_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "inline_policy": [],
+                    "managed_policy_arns": [],
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_iam_role.ecs_task_role",
+            "mode": "managed",
+            "type": "aws_iam_role",
+            "name": "ecs_task_role",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+                    "description": null,
+                    "force_detach_policies": false,
+                    "max_session_duration": 3600,
+                    "name": "eth-client-task-role",
+                    "path": "/",
+                    "permissions_boundary": null,
+                    "tags": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "create_date": true,
+                    "id": true,
+                    "inline_policy": true,
+                    "managed_policy_arns": true,
+                    "name_prefix": true,
+                    "tags_all": true,
+                    "unique_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "inline_policy": [],
+                    "managed_policy_arns": [],
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_iam_role_policy_attachment.ecs_task_execution_role_policy",
+            "mode": "managed",
+            "type": "aws_iam_role_policy_attachment",
+            "name": "ecs_task_execution_role_policy",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "policy_arn": "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
+                    "role": "eth-client-task-execution-role"
+                },
+                "after_unknown": {
+                    "id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {}
+            }
+        },
+        {
+            "address": "aws_internet_gateway.app_igw",
+            "mode": "managed",
+            "type": "aws_internet_gateway",
+            "name": "app_igw",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "tags": {
+                        "Name": "eth-client-igw"
+                    },
+                    "tags_all": {
+                        "Name": "eth-client-igw"
+                    },
+                    "timeouts": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "id": true,
+                    "owner_id": true,
+                    "tags": {},
+                    "tags_all": {},
+                    "vpc_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "tags": {},
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_route_table.app_route_table",
+            "mode": "managed",
+            "type": "aws_route_table",
+            "name": "app_route_table",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "route": [
+                        {
+                            "carrier_gateway_id": "",
+                            "cidr_block": "0.0.0.0/0",
+                            "core_network_arn": "",
+                            "destination_prefix_list_id": "",
+                            "egress_only_gateway_id": "",
+                            "ipv6_cidr_block": "",
+                            "local_gateway_id": "",
+                            "nat_gateway_id": "",
+                            "network_interface_id": "",
+                            "transit_gateway_id": "",
+                            "vpc_endpoint_id": "",
+                            "vpc_peering_connection_id": ""
+                        }
+                    ],
+                    "tags": {
+                        "Name": "eth-client-rt"
+                    },
+                    "tags_all": {
+                        "Name": "eth-client-rt"
+                    },
+                    "timeouts": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "id": true,
+                    "owner_id": true,
+                    "propagating_vgws": true,
+                    "route": [
+                        {
+                            "gateway_id": true
+                        }
+                    ],
+                    "tags": {},
+                    "tags_all": {},
+                    "vpc_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "propagating_vgws": [],
+                    "route": [
+                        {}
+                    ],
+                    "tags": {},
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_route_table_association.app_rta_a",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "app_rta_a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "gateway_id": null,
+                    "timeouts": null
+                },
+                "after_unknown": {
+                    "id": true,
+                    "route_table_id": true,
+                    "subnet_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {}
+            }
+        },
+        {
+            "address": "aws_route_table_association.app_rta_b",
+            "mode": "managed",
+            "type": "aws_route_table_association",
+            "name": "app_rta_b",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "gateway_id": null,
+                    "timeouts": null
+                },
+                "after_unknown": {
+                    "id": true,
+                    "route_table_id": true,
+                    "subnet_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {}
+            }
+        },
+        {
+            "address": "aws_security_group.app_sg",
+            "mode": "managed",
+            "type": "aws_security_group",
+            "name": "app_sg",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "description": "Security group for eth-client task",
+                    "egress": [
+                        {
+                            "cidr_blocks": [
+                                "0.0.0.0/0"
+                            ],
+                            "description": "",
+                            "from_port": 0,
+                            "ipv6_cidr_blocks": [],
+                            "prefix_list_ids": [],
+                            "protocol": "-1",
+                            "security_groups": [],
+                            "self": false,
+                            "to_port": 0
+                        }
+                    ],
+                    "name": "eth-client-sg",
+                    "revoke_rules_on_delete": false,
+                    "tags": {
+                        "Name": "eth-client-sg"
+                    },
+                    "tags_all": {
+                        "Name": "eth-client-sg"
+                    },
+                    "timeouts": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "egress": [
+                        {
+                            "cidr_blocks": [
+                                false
+                            ],
+                            "ipv6_cidr_blocks": [],
+                            "prefix_list_ids": [],
+                            "security_groups": []
+                        }
+                    ],
+                    "id": true,
+                    "ingress": true,
+                    "name_prefix": true,
+                    "owner_id": true,
+                    "tags": {},
+                    "tags_all": {},
+                    "vpc_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "egress": [
+                        {
+                            "cidr_blocks": [
+                                false
+                            ],
+                            "ipv6_cidr_blocks": [],
+                            "prefix_list_ids": [],
+                            "security_groups": []
+                        }
+                    ],
+                    "ingress": [],
+                    "tags": {},
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_subnet.app_subnet_a",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "app_subnet_a",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "assign_ipv6_address_on_creation": false,
+                    "availability_zone": "us-east-1a",
+                    "cidr_block": "10.0.1.0/24",
+                    "customer_owned_ipv4_pool": null,
+                    "enable_dns64": false,
+                    "enable_lni_at_device_index": null,
+                    "enable_resource_name_dns_a_record_on_launch": false,
+                    "enable_resource_name_dns_aaaa_record_on_launch": false,
+                    "ipv6_cidr_block": null,
+                    "ipv6_native": false,
+                    "map_customer_owned_ip_on_launch": null,
+                    "map_public_ip_on_launch": false,
+                    "outpost_arn": null,
+                    "tags": {
+                        "Name": "eth-client-subnet-a"
+                    },
+                    "tags_all": {
+                        "Name": "eth-client-subnet-a"
+                    },
+                    "timeouts": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "availability_zone_id": true,
+                    "id": true,
+                    "ipv6_cidr_block_association_id": true,
+                    "owner_id": true,
+                    "private_dns_hostname_type_on_launch": true,
+                    "tags": {},
+                    "tags_all": {},
+                    "vpc_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "tags": {},
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_subnet.app_subnet_b",
+            "mode": "managed",
+            "type": "aws_subnet",
+            "name": "app_subnet_b",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "assign_ipv6_address_on_creation": false,
+                    "availability_zone": "us-east-1b",
+                    "cidr_block": "10.0.2.0/24",
+                    "customer_owned_ipv4_pool": null,
+                    "enable_dns64": false,
+                    "enable_lni_at_device_index": null,
+                    "enable_resource_name_dns_a_record_on_launch": false,
+                    "enable_resource_name_dns_aaaa_record_on_launch": false,
+                    "ipv6_cidr_block": null,
+                    "ipv6_native": false,
+                    "map_customer_owned_ip_on_launch": null,
+                    "map_public_ip_on_launch": false,
+                    "outpost_arn": null,
+                    "tags": {
+                        "Name": "eth-client-subnet-b"
+                    },
+                    "tags_all": {
+                        "Name": "eth-client-subnet-b"
+                    },
+                    "timeouts": null
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "availability_zone_id": true,
+                    "id": true,
+                    "ipv6_cidr_block_association_id": true,
+                    "owner_id": true,
+                    "private_dns_hostname_type_on_launch": true,
+                    "tags": {},
+                    "tags_all": {},
+                    "vpc_id": true
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "tags": {},
+                    "tags_all": {}
+                }
+            }
+        },
+        {
+            "address": "aws_vpc.app_vpc",
+            "mode": "managed",
+            "type": "aws_vpc",
+            "name": "app_vpc",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "change": {
+                "actions": [
+                    "create"
+                ],
+                "before": null,
+                "after": {
+                    "assign_generated_ipv6_cidr_block": null,
+                    "cidr_block": "10.0.0.0/16",
+                    "enable_dns_hostnames": true,
+                    "enable_dns_support": true,
+                    "instance_tenancy": "default",
+                    "ipv4_ipam_pool_id": null,
+                    "ipv4_netmask_length": null,
+                    "ipv6_ipam_pool_id": null,
+                    "ipv6_netmask_length": null,
+                    "tags": {
+                        "Name": "eth-client-vpc"
+                    },
+                    "tags_all": {
+                        "Name": "eth-client-vpc"
+                    }
+                },
+                "after_unknown": {
+                    "arn": true,
+                    "default_network_acl_id": true,
+                    "default_route_table_id": true,
+                    "default_security_group_id": true,
+                    "dhcp_options_id": true,
+                    "enable_network_address_usage_metrics": true,
+                    "id": true,
+                    "ipv6_association_id": true,
+                    "ipv6_cidr_block": true,
+                    "ipv6_cidr_block_network_border_group": true,
+                    "main_route_table_id": true,
+                    "owner_id": true,
+                    "tags": {},
+                    "tags_all": {}
+                },
+                "before_sensitive": false,
+                "after_sensitive": {
+                    "tags": {},
+                    "tags_all": {}
+                }
+            }
+        }
+    ],
+    "output_changes": {
+        "ecr_repository_url": {
+            "actions": [
+                "create"
+            ],
+            "before": null,
+            "after_unknown": true,
+            "before_sensitive": false,
+            "after_sensitive": false
+        },
+        "ecs_cluster_name": {
+            "actions": [
+                "create"
+            ],
+            "before": null,
+            "after": "eth-client-cluster",
+            "after_unknown": false,
+            "before_sensitive": false,
+            "after_sensitive": false
+        },
+        "ecs_service_name": {
+            "actions": [
+                "create"
+            ],
+            "before": null,
+            "after": "eth-client-service",
+            "after_unknown": false,
+            "before_sensitive": false,
+            "after_sensitive": false
+        }
+    },
+    "prior_state": {
+        "format_version": "1.0",
+        "terraform_version": "1.11.1",
+        "values": {
+            "outputs": {
+                "ecs_cluster_name": {
+                    "sensitive": false,
+                    "value": "eth-client-cluster",
+                    "type": "string"
+                },
+                "ecs_service_name": {
+                    "sensitive": false,
+                    "value": "eth-client-service",
+                    "type": "string"
+                }
+            },
+            "root_module": {}
+        }
+    },
+    "configuration": {
+        "provider_config": {
+            "aws": {
+                "name": "aws",
+                "full_name": "registry.terraform.io/hashicorp/aws",
+                "expressions": {
+                    "region": {
+                        "constant_value": "us-east-1"
+                    }
+                }
+            }
+        },
+        "root_module": {
+            "outputs": {
+                "ecr_repository_url": {
+                    "expression": {
+                        "references": [
+                            "aws_ecr_repository.app_repo.repository_url",
+                            "aws_ecr_repository.app_repo"
+                        ]
+                    }
+                },
+                "ecs_cluster_name": {
+                    "expression": {
+                        "references": [
+                            "aws_ecs_cluster.app_cluster.name",
+                            "aws_ecs_cluster.app_cluster"
+                        ]
+                    }
+                },
+                "ecs_service_name": {
+                    "expression": {
+                        "references": [
+                            "aws_ecs_service.app_service.name",
+                            "aws_ecs_service.app_service"
+                        ]
+                    }
+                }
+            },
+            "resources": [
+                {
+                    "address": "aws_ecr_repository.app_repo",
+                    "mode": "managed",
+                    "type": "aws_ecr_repository",
+                    "name": "app_repo",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "image_scanning_configuration": [
+                            {
+                                "scan_on_push": {
+                                    "constant_value": true
+                                }
+                            }
+                        ],
+                        "image_tag_mutability": {
+                            "constant_value": "MUTABLE"
+                        },
+                        "name": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_ecr_repository_policy.app_repo_policy",
+                    "mode": "managed",
+                    "type": "aws_ecr_repository_policy",
+                    "name": "app_repo_policy",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "policy": {},
+                        "repository": {
+                            "references": [
+                                "aws_ecr_repository.app_repo.name",
+                                "aws_ecr_repository.app_repo"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_ecs_cluster.app_cluster",
+                    "mode": "managed",
+                    "type": "aws_ecs_cluster",
+                    "name": "app_cluster",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "name": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "setting": [
+                            {
+                                "name": {
+                                    "constant_value": "containerInsights"
+                                },
+                                "value": {
+                                    "constant_value": "enabled"
+                                }
+                            }
+                        ]
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_ecs_service.app_service",
+                    "mode": "managed",
+                    "type": "aws_ecs_service",
+                    "name": "app_service",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "cluster": {
+                            "references": [
+                                "aws_ecs_cluster.app_cluster.id",
+                                "aws_ecs_cluster.app_cluster"
+                            ]
+                        },
+                        "desired_count": {
+                            "constant_value": 1
+                        },
+                        "launch_type": {
+                            "constant_value": "FARGATE"
+                        },
+                        "name": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "network_configuration": [
+                            {
+                                "assign_public_ip": {
+                                    "constant_value": true
+                                },
+                                "security_groups": {
+                                    "references": [
+                                        "aws_security_group.app_sg.id",
+                                        "aws_security_group.app_sg"
+                                    ]
+                                },
+                                "subnets": {
+                                    "references": [
+                                        "aws_subnet.app_subnet_a.id",
+                                        "aws_subnet.app_subnet_a",
+                                        "aws_subnet.app_subnet_b.id",
+                                        "aws_subnet.app_subnet_b"
+                                    ]
+                                }
+                            }
+                        ],
+                        "task_definition": {
+                            "references": [
+                                "aws_ecs_task_definition.app_task.arn",
+                                "aws_ecs_task_definition.app_task"
+                            ]
+                        }
+                    },
+                    "schema_version": 1
+                },
+                {
+                    "address": "aws_ecs_task_definition.app_task",
+                    "mode": "managed",
+                    "type": "aws_ecs_task_definition",
+                    "name": "app_task",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "container_definitions": {
+                            "references": [
+                                "var.app_name",
+                                "aws_ecr_repository.app_repo.repository_url",
+                                "aws_ecr_repository.app_repo"
+                            ]
+                        },
+                        "cpu": {
+                            "constant_value": "256"
+                        },
+                        "execution_role_arn": {
+                            "references": [
+                                "aws_iam_role.ecs_task_execution_role.arn",
+                                "aws_iam_role.ecs_task_execution_role"
+                            ]
+                        },
+                        "family": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "memory": {
+                            "constant_value": "512"
+                        },
+                        "network_mode": {
+                            "constant_value": "awsvpc"
+                        },
+                        "requires_compatibilities": {
+                            "constant_value": [
+                                "FARGATE"
+                            ]
+                        },
+                        "task_role_arn": {
+                            "references": [
+                                "aws_iam_role.ecs_task_role.arn",
+                                "aws_iam_role.ecs_task_role"
+                            ]
+                        }
+                    },
+                    "schema_version": 1
+                },
+                {
+                    "address": "aws_iam_role.ecs_task_execution_role",
+                    "mode": "managed",
+                    "type": "aws_iam_role",
+                    "name": "ecs_task_execution_role",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "assume_role_policy": {},
+                        "name": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_iam_role.ecs_task_role",
+                    "mode": "managed",
+                    "type": "aws_iam_role",
+                    "name": "ecs_task_role",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "assume_role_policy": {},
+                        "name": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_iam_role_policy_attachment.ecs_task_execution_role_policy",
+                    "mode": "managed",
+                    "type": "aws_iam_role_policy_attachment",
+                    "name": "ecs_task_execution_role_policy",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "policy_arn": {
+                            "constant_value": "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+                        },
+                        "role": {
+                            "references": [
+                                "aws_iam_role.ecs_task_execution_role.name",
+                                "aws_iam_role.ecs_task_execution_role"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_internet_gateway.app_igw",
+                    "mode": "managed",
+                    "type": "aws_internet_gateway",
+                    "name": "app_igw",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "tags": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "vpc_id": {
+                            "references": [
+                                "aws_vpc.app_vpc.id",
+                                "aws_vpc.app_vpc"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_route_table.app_route_table",
+                    "mode": "managed",
+                    "type": "aws_route_table",
+                    "name": "app_route_table",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "route": {
+                            "references": [
+                                "aws_internet_gateway.app_igw.id",
+                                "aws_internet_gateway.app_igw"
+                            ]
+                        },
+                        "tags": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "vpc_id": {
+                            "references": [
+                                "aws_vpc.app_vpc.id",
+                                "aws_vpc.app_vpc"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_route_table_association.app_rta_a",
+                    "mode": "managed",
+                    "type": "aws_route_table_association",
+                    "name": "app_rta_a",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "route_table_id": {
+                            "references": [
+                                "aws_route_table.app_route_table.id",
+                                "aws_route_table.app_route_table"
+                            ]
+                        },
+                        "subnet_id": {
+                            "references": [
+                                "aws_subnet.app_subnet_a.id",
+                                "aws_subnet.app_subnet_a"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_route_table_association.app_rta_b",
+                    "mode": "managed",
+                    "type": "aws_route_table_association",
+                    "name": "app_rta_b",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "route_table_id": {
+                            "references": [
+                                "aws_route_table.app_route_table.id",
+                                "aws_route_table.app_route_table"
+                            ]
+                        },
+                        "subnet_id": {
+                            "references": [
+                                "aws_subnet.app_subnet_b.id",
+                                "aws_subnet.app_subnet_b"
+                            ]
+                        }
+                    },
+                    "schema_version": 0
+                },
+                {
+                    "address": "aws_security_group.app_sg",
+                    "mode": "managed",
+                    "type": "aws_security_group",
+                    "name": "app_sg",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "description": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "egress": {
+                            "constant_value": [
+                                {
+                                    "cidr_blocks": [
+                                        "0.0.0.0/0"
+                                    ],
+                                    "description": null,
+                                    "from_port": 0,
+                                    "ipv6_cidr_blocks": null,
+                                    "prefix_list_ids": null,
+                                    "protocol": "-1",
+                                    "security_groups": null,
+                                    "self": null,
+                                    "to_port": 0
+                                }
+                            ]
+                        },
+                        "name": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "tags": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "vpc_id": {
+                            "references": [
+                                "aws_vpc.app_vpc.id",
+                                "aws_vpc.app_vpc"
+                            ]
+                        }
+                    },
+                    "schema_version": 1
+                },
+                {
+                    "address": "aws_subnet.app_subnet_a",
+                    "mode": "managed",
+                    "type": "aws_subnet",
+                    "name": "app_subnet_a",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "availability_zone": {
+                            "constant_value": "us-east-1a"
+                        },
+                        "cidr_block": {
+                            "constant_value": "10.0.1.0/24"
+                        },
+                        "tags": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "vpc_id": {
+                            "references": [
+                                "aws_vpc.app_vpc.id",
+                                "aws_vpc.app_vpc"
+                            ]
+                        }
+                    },
+                    "schema_version": 1
+                },
+                {
+                    "address": "aws_subnet.app_subnet_b",
+                    "mode": "managed",
+                    "type": "aws_subnet",
+                    "name": "app_subnet_b",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "availability_zone": {
+                            "constant_value": "us-east-1b"
+                        },
+                        "cidr_block": {
+                            "constant_value": "10.0.2.0/24"
+                        },
+                        "tags": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        },
+                        "vpc_id": {
+                            "references": [
+                                "aws_vpc.app_vpc.id",
+                                "aws_vpc.app_vpc"
+                            ]
+                        }
+                    },
+                    "schema_version": 1
+                },
+                {
+                    "address": "aws_vpc.app_vpc",
+                    "mode": "managed",
+                    "type": "aws_vpc",
+                    "name": "app_vpc",
+                    "provider_config_key": "aws",
+                    "expressions": {
+                        "cidr_block": {
+                            "constant_value": "10.0.0.0/16"
+                        },
+                        "enable_dns_hostnames": {
+                            "constant_value": true
+                        },
+                        "enable_dns_support": {
+                            "constant_value": true
+                        },
+                        "tags": {
+                            "references": [
+                                "var.app_name"
+                            ]
+                        }
+                    },
+                    "schema_version": 1
+                }
+            ],
+            "variables": {
+                "app_name": {
+                    "default": "eth-client",
+                    "description": "Name of the application"
+                },
+                "environment": {
+                    "default": "production",
+                    "description": "Deployment environment"
+                }
+            }
+        }
+    },
+    "relevant_attributes": [
+        {
+            "resource": "aws_route_table.app_route_table",
+            "attribute": [
+                "id"
+            ]
+        },
+        {
+            "resource": "aws_iam_role.ecs_task_execution_role",
+            "attribute": [
+                "arn"
+            ]
+        },
+        {
+            "resource": "aws_security_group.app_sg",
+            "attribute": [
+                "id"
+            ]
+        },
+        {
+            "resource": "aws_internet_gateway.app_igw",
+            "attribute": [
+                "id"
+            ]
+        },
+        {
+            "resource": "aws_subnet.app_subnet_a",
+            "attribute": [
+                "id"
+            ]
+        },
+        {
+            "resource": "aws_ecs_cluster.app_cluster",
+            "attribute": [
+                "id"
+            ]
+        },
+        {
+            "resource": "aws_ecs_service.app_service",
+            "attribute": [
+                "name"
+            ]
+        },
+        {
+            "resource": "aws_iam_role.ecs_task_execution_role",
+            "attribute": [
+                "name"
+            ]
+        },
+        {
+            "resource": "aws_vpc.app_vpc",
+            "attribute": [
+                "id"
+            ]
+        },
+        {
+            "resource": "aws_ecr_repository.app_repo",
+            "attribute": [
+                "repository_url"
+            ]
+        },
+        {
+            "resource": "aws_ecs_cluster.app_cluster",
+            "attribute": [
+                "name"
+            ]
+        },
+        {
+            "resource": "aws_ecs_task_definition.app_task",
+            "attribute": [
+                "arn"
+            ]
+        },
+        {
+            "resource": "aws_iam_role.ecs_task_role",
+            "attribute": [
+                "arn"
+            ]
+        },
+        {
+            "resource": "aws_ecr_repository.app_repo",
+            "attribute": [
+                "name"
+            ]
+        },
+        {
+            "resource": "aws_subnet.app_subnet_b",
+            "attribute": [
+                "id"
+            ]
+        }
+    ],
+    "timestamp": "2025-03-12T13:33:52Z",
+    "applyable": true,
+    "complete": true,
+    "errored": false
+}
