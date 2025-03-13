@@ -41,6 +41,13 @@
 2. Run `podman build -t polygon-client .`
 3. `podman images` - select the imageid for polygon-client
 4. Run `podman run -it <imageID>` - ex -------> podman run -it ddb3e1fed564
+5. Execute one of the following commands and check the result ---> name of binary in Docker build is `polygon-client`
+ 
+ `polygon-client` ----> runs with default hardcoded value of json
+
+    or specify your own json and pass input to the utility
+
+ `echo '{"jsonrpc":"2.0","method":"eth_blockNumber","id":2}' | polygon-client`
 
 
 ## Terraform
